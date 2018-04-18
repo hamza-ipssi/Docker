@@ -1,0 +1,27 @@
+# Nginx
+nginx:
+  image: nginx:stable
+  ports:
+    - "8080:80"
+  volumes:
+    - ./www:/www
+    - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+  links:
+    - php:php
+# PHP
+php:
+  build: ./php
+  volumes:
+    - ./www:/www
+  links:
+    - db:db
+# MySQL
+db:
+  image: mysql:5.5
+  ports:
+    - "1919:1919"
+  environment:
+    MYSQL_ROOT_PASSWORD: darkroot
+    MYSQL_DATABASE: miradb
+    MYSQL_USER: darkmira
+    MYSQL_PASSWORD: dark
